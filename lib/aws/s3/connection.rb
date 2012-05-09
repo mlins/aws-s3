@@ -8,7 +8,9 @@ module AWS
         
         def prepare_path(path)
           path = path.remove_extended unless path.valid_utf8?
-          path
+          filename = path.split('/')[-1]
+          path_without_filename = (path.split('/') - [filename]).join('/')
+          [URI.escape(path_without_filename), CGI.escape(filename)].join('/') 
         end
       end
       
